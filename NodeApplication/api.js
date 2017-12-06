@@ -2,11 +2,13 @@
 
 const express = require("express");
 const EventEmitter = require("events");
+const MongoClient = require("mongodb").MongoClient;
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter();
 const app = express();
 app.set("view engine", "hbs");
 app.listen(3000);
+     
 let poem = ["У лукоморья дуб зелёный;",
              "Златая цепь на дубе том:",
              "И днём и ночью кот учёный",
@@ -45,29 +47,50 @@ function getRandom(min,max,num){
     return Math.floor(Math.floor(Math.random() * (max - min + 1) + min) / num) * num;
 }
 app.get("/poem", (req, res) => {
-    res.writeHead(200, {
-        "Content-Type": "text/html; charset=utf-8"
-    });
-    let counter = 0;
-    function Timer(count){
-        let timeStart  = +new Date();
-        let temp = getRandom(1000, 5000, 1000)
-        setTimeout(function() {
-            res.write(`<p style="margin-left: 40%">${poem[count]}</p>`);
-            if(count < poem.length - 1){
-                console.log(count);
-                Timer(++count);
-            }
-            else{
-                res.end();
-            }
-            let timeEnd  = +new Date();
-            console.log("passedTheTime: ", timeEnd - timeStart);
-        }, temp);
-    } 
-    Timer(counter);
-
+   res.writeHead(200, {
+      "Content-Type": "text/html; charset=utf-8"
+   });
+   let counter = 0;
+   function Timer(count){
+      let timeStart  = +new Date();
+      let temp = getRandom(1000, 5000, 1000)
+      setTimeout(function() {
+         res.write(`<p style="margin-left: 40%">${poem[count]}</p>`);
+         if(count < poem.length - 1){
+            console.log(count);
+            Timer(++count);
+         }
+         else{
+            res.end();
+         }
+         let timeEnd  = +new Date();
+         console.log("passedTheTime: ", timeEnd - timeStart);
+      }, temp);
+   } 
+   Timer(counter);
 });
-
-
+app.get("/todo", (req, res) => {
+   let url = "mongodb://localhost:27017/toDoDb";
+   let toDoList;
+   MongoClient.connect(url, (err, db) => {
+      toDoList = db.collection("toDoList");
+      console.log(db.collection(""));
+      db.close();
+   });
+   res.json(toDoList);
+   //console.log(JSON.stringify(toDoList));
+   //res.send("hi");
+});
+app.post("/todo/:text/:title", (req, res) => {
+   let item = {
+      text: req.params("text"),
+      title: req.params("title")
+   }
+   MongoClient.connect(url, (err, db) => {
+      let toDoList = db.collection("toDoList");
+      toDoList.insertOne(item, (err, res) => {
+         db.close();
+      });
+   });
+});
 

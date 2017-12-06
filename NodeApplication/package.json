@@ -5,12 +5,13 @@
   "dependencies": {
     "express": "^4.16.2",
     "hbs": "^4.0.1",
+    "mongodb": "^3.0.0-rc0"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
   },
   "scripts": {
-    "app1": "./node_modules/.bin/nodemon api.js" 
+    "app1": "./node_modules/.bin/nodemon api.js"
   },
   "author": "",
   "license": "ISC",
