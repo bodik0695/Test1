@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "api.js",
   "dependencies": {
+    "assert": "^1.4.1",
     "express": "^4.16.2",
     "hbs": "^4.0.1",
-    "mongodb": "^3.0.0-rc0"
+    "mongodb": "2.2.33",
+    "update-mongo": "0.0.4"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"

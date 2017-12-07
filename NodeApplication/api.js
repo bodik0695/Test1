@@ -8,7 +8,7 @@ const myEmitter = new MyEmitter();
 const app = express();
 app.set("view engine", "hbs");
 app.listen(3000);
-     
+
 let poem = ["У лукоморья дуб зелёный;",
              "Златая цепь на дубе том:",
              "И днём и ночью кот учёный",
@@ -70,27 +70,69 @@ app.get("/poem", (req, res) => {
    Timer(counter);
 });
 app.get("/todo", (req, res) => {
-   let url = "mongodb://localhost:27017/toDoDb";
-   let toDoList;
-   MongoClient.connect(url, (err, db) => {
-      toDoList = db.collection("toDoList");
-      console.log(db.collection(""));
-      db.close();
-   });
-   res.json(toDoList);
-   //console.log(JSON.stringify(toDoList));
-   //res.send("hi");
-});
-app.post("/todo/:text/:title", (req, res) => {
-   let item = {
-      text: req.params("text"),
-      title: req.params("title")
-   }
-   MongoClient.connect(url, (err, db) => {
-      let toDoList = db.collection("toDoList");
-      toDoList.insertOne(item, (err, res) => {
-         db.close();
-      });
-   });
+    let url = "mongodb://localhost:27017/toDoDb";
+    let toDoList;
+    let allDocuments;
+    let timeStart = +new Date();
+    MongoClient.connect(url, (err, db) => {
+        toDoList = db.collection("toDoList");
+        toDoList.find().toArray((err, todos) => {
+            allDocuments = todos;
+            let timeEnd = new Date();
+            db.close();
+            res.json(allDocuments);
+         });   
+        let timeEnd = new Date();
+    });
 });
 
+app.post("/todo/:title/:text/:status", (req, res) => {
+    let currentTime = new Date();
+    let item = {
+        text: req.param("text"),
+        title: req.param("title"),
+        createAt: currentTime.toString(),
+        status: req.param("status")
+    }
+
+    let url = "mongodb://localhost:27017/toDoDb";
+    MongoClient.connect(url, function(err, db) {
+
+        if(err){
+            db.close();
+            res.end();
+            ruturn ;
+        }
+        
+        let toDoList = db.collection('toDoList');
+        toDoList.insertOne(item, (err, todos) => {
+            db.close();
+            res.end();
+        });
+    });
+});
+
+app.put("/todo/:title/:text/:status", (req, res) => {
+    let url = "mongodb://localhost:27017/toDoDb"
+    let toDoList;
+    let item;
+    MongoClient.connect(url, (err, db)=>{
+        toDoList = db.collection('toDoList');
+        toDoList.updateOne({title: req.param("title")}, {$set: {text: req.param("text"), status: req.param("status")}},  (err, Item) => {
+            Item.text = req.param("text");
+            db.close();
+            res.end();
+         });
+    });
+});
+app.delete("/todo/:title", (req, res) => {
+    let url = "mongodb://localhost:27017/toDoDb"
+    let toDoList;
+    MongoClient.connect(url, (err, db)=>{
+        toDoList = db.collection('toDoList');
+        toDoList.deleteOne({title: req.param("title")}, (err, Item) => {
+            db.close();
+            res.end();
+        });
+    });
+});
