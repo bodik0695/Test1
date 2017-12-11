@@ -3,12 +3,18 @@
 const express = require("express");
 const EventEmitter = require("events");
 const MongoClient = require("mongodb").MongoClient;
-const ObjectId = require('mongodb').ObjectID
-class MyEmitter extends EventEmitter {}
+const ObjectId = require('mongodb').ObjectID;
+const bodyParser = require('body-parser');
+class MyEmitter extends EventEmitter {};
 const myEmitter = new MyEmitter();
 const app = express();
-app.set("view engine", "hbs");
+
 app.listen(3000);
+app.set("view engine", "hbs");
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 let poem = ["У лукоморья дуб зелёный;",
              "Златая цепь на дубе том:",
@@ -44,7 +50,7 @@ let poem = ["У лукоморья дуб зелёный;",
              "Под ним сидел, и кот учёный",
              "Свои мне сказки говорил."];
 
-function getRandom(min,max,num){
+function getRandom(min, max, num) {
 
     return Math.floor(Math.floor(Math.random() * (max - min + 1) + min) / num) * num;
     
@@ -64,10 +70,9 @@ app.get("/poem", (req, res) => {
 
       setTimeout(function() {
          res.write(`<p style="margin-left: 40%">${poem[count]}</p>`);
-         if(count < poem.length - 1){
+         if(count < poem.length - 1) {
             Timer(++count);
-         }
-         else{
+         } else {
             res.end();
          }
 
@@ -112,14 +117,15 @@ app.post("/todo/:title/:text/:status", (req, res) => {
     }
 
     MongoClient.connect(url, function(err, db) {
+        
+        let toDoList = db.collection('toDoList');
 
         if(err){
             db.close();
             res.end();
             ruturn ;
         }
-        
-        let toDoList = db.collection('toDoList');
+
         toDoList.insertOne(item, (err, todos) => {
             db.close();
             res.end();
@@ -165,10 +171,82 @@ app.delete("/todo/:id", (req, res) => {
 
     MongoClient.connect(url, (err, db)=>{
         toDoList = db.collection('toDoList');
-        toDoList.deleteOne({"_id": ObjectId(req.param("id"))}, (err, Item) => {
+        toDoList.deleteOne( {"_id": ObjectId(req.param("id"))}, (err, Item) => {
             db.close();
             res.end();
         });
     });
-
 });
+
+app.use("/newtodo", (req, res) => {
+
+    let url = "mongodb://localhost:27017/toDoDb";
+    
+    MongoClient.connect(url, function(err, db) {
+        let toDoList = db.collection('toDoList');
+
+        if( Object.is(req.method, "GET") ) {
+
+            toDoList.find().toArray( (error, todos) => {
+                res.json(todos);
+                res.end(); 
+                db.close(); 
+            });  
+        } else if( Object.is(req.method, "POST") ) {
+
+            let item = {
+                title: req.body.title,
+                text: req.body.text,
+                status: req.body.status,
+                createAt: new Date().toString(),
+                changeAt: new Date().toString()
+            };
+
+            if(err){
+                db.close();
+                res.end();
+                ruturn ;
+            };
+    
+            toDoList.insertOne(item, (err, todos) => {
+                db.close();
+                res.end();
+            });
+        } else if( Object.is(req.method, "PUT") ) { 
+
+            toDoList.updateOne(
+                {
+                    "_id": ObjectId(req.body._id)
+                }, 
+                {
+                    $set: {
+                        title: req.body.title,
+                        text: req.body.text, 
+                        status: req.body.status, 
+                        changeAt: new Date().toString()
+                    }
+                },  
+                (err, Item) => {
+                    db.close();
+                    res.end();
+                }
+            );
+        } else if( Object.is(req.method, "DELETE") ) { 
+
+            toDoList.deleteOne( {"_id": ObjectId(req.body._id) }, (err, Item) => {
+                db.close();
+                res.end();
+            });
+        };
+    });
+});
+
+
+
+
+/*{
+	"title": "one",
+	"text": "two",
+	"status": 0
+}
+*/
