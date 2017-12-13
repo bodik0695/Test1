@@ -7,14 +7,25 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "hbs": "^4.0.1",
+    "method-override": "^2.3.10",
     "mongodb": "2.2.33",
+    "morgan": "^1.9.0",
     "update-mongo": "0.0.4"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.1"
   },
   "scripts": {
-    "app1": "./node_modules/.bin/nodemon api.js"
+    "app1": "./node_modules/.bin/nodemon api.js",
+    "test": "node ./node_modules/mocha/bin/mocha"
   },
   "author": "",
   "license": "ISC",
