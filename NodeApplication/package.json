@@ -25,7 +25,8 @@
   },
   "scripts": {
     "app1": "./node_modules/.bin/nodemon api.js",
-    "test": "node ./node_modules/mocha/bin/mocha"
+    "test": "node ./node_modules/mocha/bin/mocha",
+    "eslint": "./node_modules/.bin/eslint"
   },
   "author": "",
   "license": "ISC",
