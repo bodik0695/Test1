@@ -1,8 +1,80 @@
+.task_baseElements, .taskChange_baseElements {
+  height: 35px;
+  display: flex;
+  align-items: center; }
+
+.task_checkbox, .taskChange_checkbox {
+  display: inline-block;
+  width: 13px;
+  height: 13px; }
+  .task_checkbox input, .taskChange_checkbox input {
+    display: block;
+    top: 0; }
+
+.task_title, .taskChange_title {
+  display: inline-block;
+  border: 1px solid #bfc1f8;
+  border-radius: 5px;
+  padding-right: 10px; }
+
+.task_text {
+  vertical-align: middle;
+  border: 1px solid #bfc1f8;
+  border-radius: 5px;
+  margin-top: 3px; }
+
+.task_editBtn, .task_delBtn, .taskChange_okBtn, .taskChange_cancelBtn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  vertical-align: top; }
+
+.task_editBtnIcon, .taskChange_okBtnIcon {
+  width: 20px;
+  height: 20px; }
+
+* {
+  margin: 0;
+  padding: 0;
+  line-height: normal; }
+
 body {
-  background: #f13535;
-  width: 500px; }
-.header {
-  background: #a474bd;
-  width: 100%;
-  height: 200px;
-  border: 3px solid #60e8ec; }
+  background: #fff; }
+
+.todo {
+  display: flex;
+  flex-direction: column; }
+
+.tasksList {
+  list-style-type: none; }
+
+.task {
+  border: 1px solid #bfc1f8;
+  border-radius: 5px; }
+  .task_titleTxt, .task_textTxt {
+    line-height: normal;
+    margin-bottom: 0; }
+  .task_editBtn {
+    margin-left: 20px; }
+  .task_editBtnIcon {
+    margin-top: -2px; }
+  .task_delBtn {
+    margin-left: 2px; }
+  .task_delBtnIcon {
+    font-size: 30px;
+    margin-top: -15px; }
+
+.taskChange {
+  border: 1px solid #bfc1f8;
+  border-radius: 5px; }
+  .taskChange_okBtn {
+    margin-left: 20px; }
+  .taskChange_cancelBtn {
+    margin-left: 2px; }
+  .taskChange_cancelBtnIcon {
+    font-size: 30px;
+    margin-top: -15px; }
+  .taskChange_text {
+    margin-top: 3px; }
