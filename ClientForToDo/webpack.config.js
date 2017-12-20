@@ -20,11 +20,22 @@ module.exports = {
                 }),
             },
         ],
+        loaders: [
+            {
+                test: /\.handlebars$/,
+                loader: `${__dirname}/../../?helperDirs[]=${__dirname}/helpers`,
+            },
+        ],
     },
     devServer: {
-        hot: true,
         inline: true,
         port: 4000,
+        proxy: {
+            '/todos': {
+                target: 'http://localhost:3000',
+                secure: false,
+            },
+        },
     },
     plugins: [
         new ExtractTextPlugin('style.css'),
