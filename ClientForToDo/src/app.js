@@ -1,3 +1,4 @@
+import './js/rainbows';
+import './js/unicorns';
 import './scss/base.scss';
-import Task from './js/task';
-import './js/request';
+import './scss/header.scss';
