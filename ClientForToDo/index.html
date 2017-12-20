@@ -8,69 +8,7 @@
         <link rel="stylesheet" href="dist/style.css" />
     </head>
     <body>
-        <div class="container-fluid">
-            <div class="container justify-content-center">
-                <div class="row justify-content-center">
-                    <section class="todo col-sm-10 col-md-7 mt-5">
-                        <div class="newTask">
-                            <form action="" name="newTaskForm" class="newTaskForm">
-                                <div class="form-group">
-                                    <input type="text" class="form-control taskTitle" placeholder="Task Title">
-                                    <textarea class="form-control taskText" placeholder="Task Text"></textarea>
-                                    <button class="btn btn-primary mt-2">Add</button>
-                                    <input type="submit" class="btn btn-primary mt-2" value="Add">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="tasks">
-                            <ul class="tasksList">
-                                <li class="task p-2">
-                                    <form action="" name="taskForm" class="taskForm">
-                                        <div class="task_baseElements">
-                                            <div class="col-md-1 checkbox task_checkbox">
-                                                 <input type="checkbox">
-                                            </div>
-                                            <div class="col-md-8 task_title">
-                                                <p class="task_titleTxt">Title</p>
-                                            </div>
-                                            <button class="btn btn-success col-md-1 task_editBtn"  title="Edit Task">
-                                                <img src="src/images/editWhite.svg" alt="" class="task_editBtnIcon">
-                                            </button>
-                                            <button class="btn btn-danger col-md-1 task_delBtn" title="Delete Task"><div class="task_delBtnIcon">&times;</div></button>
-                                        </div>
-                                        <div class="col-12 col-md-12 task_text" title="all text">
-                                            <p class="task_textTxt">Text</p>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="taskChange p-2">
-                            <form action="" name="taskChangeForm" class="taskChangeForm">
-                                <div class="taskChange_baseElements">
-                                    <div class="col-md-1 checkbox taskChange_checkbox">
-                                            <input type="checkbox">
-                                    </div>
-                                    <input type="text" class="form-control col-md-8 py-0 taskChange_title" value="Task1">
-                                    <button class="btn btn-success col-md-1 taskChange_okBtn"  title="Accept">
-                                        <img src="src/images/checkWhite.svg" alt="" class="taskChange_okBtnIcon">
-                                    </button>
-                                    <button class="btn btn-danger col-md-1 taskChange_cancelBtn" title="Cancel"><div class="taskChange_cancelBtnIcon">&times;</div></button>
-                                </div>
-                                <textarea class="col-12 col-md-12 taskChange_text" title="all text"></textarea>
-                            </form>
-                        </div>
-                    </section>
-                </div>     
-            </div>
-                <script id="todo" type="text/x-handlebars-template">
-
-                </script>
-            </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <div id="content" class="container-fluid"></div>
         <script type="text/javascript" src="dist/bundle.js"></script>
     </body>
 </html>

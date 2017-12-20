@@ -19,11 +19,9 @@ module.exports = {
                     use: ['css-loader', 'sass-loader'],
                 }),
             },
-        ],
-        loaders: [
             {
-                test: /\.handlebars$/,
-                loader: `${__dirname}/../../?helperDirs[]=${__dirname}/helpers`,
+                test: /\.hbs$/,
+                loader: 'handlebars-loader',
             },
         ],
     },

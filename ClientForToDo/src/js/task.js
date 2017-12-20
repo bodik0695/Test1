@@ -1,18 +1,15 @@
 export default class Task {
-    constructor(id = 'empty', title = 'empty', text = 'empty', status = 0, createAt = 'empty', changeAt = 'empty') {
-        this._id = id;
-        this._title = title;
-        this._text = text;
-        this._status = status;
-        this._createAt = createAt;
-        this._changeAt = changeAt;
+    constructor(data) {
+        this.data = data;
     }
-    changeStatus(status) {
-        if (Object.is(typeof status, 'number') && status === 0 || status === 1) {
-            this._status = status;
+    changeStatus() {
+        if (this._status === 0) {
+            this._status = 1;
+            return;
         }
+        this._status = 0;
     }
-    changeAll(title, text, status) {
+    update(title, text, status) {
         this._title = title;
         this._text = text;
         if (Object.is(typeof status, 'number') && status === 0 || status === 1) {
