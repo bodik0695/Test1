@@ -495,10 +495,16 @@ class Task {
 
 
 
+
 class Tasks {
     constructor(tasksMap) {
         this.data = {
             tasksMap
+        };
+    }
+    bind(func, context) {
+        return function() { 
+          return func.apply(context, arguments);
         };
     }
     async initilize() {
@@ -518,22 +524,30 @@ class Tasks {
         // };
 
     }
+    render(tasks = []) {
+        document.getElementById('content').innerHTML = '';
+        const content = document.getElementById('content');
+        content.innerHTML = __WEBPACK_IMPORTED_MODULE_1__templates_toDo_hbs___default()({tasks});
+    }
     eventHandlers() {
         this.data.addBtn.addEventListener('click', function(e) {
             e.preventDefault();
         });
-        this.data.addBtn.addEventListener('click', this.addTask);
+        this.data.addBtn.addEventListener('click', this.bind(this.addTask, this), false);
         
         this.data.delBtns = document.getElementsByClassName('task_delBtn');
         for (let delBtn of this.data.delBtns) {
-            delBtn.addEventListener('click', this.delTask);
+            delBtn.addEventListener('click', this.bind(this.delTask, this));
         }
     }
-    async addTask() {
+    async addTask(e) {
+        e.preventDefault();
         let newTitle = document.getElementById('newTitle').value;
         let newText = document.getElementById('newText').value;
+
         document.getElementById('newTitle').value = '';
         document.getElementById('newText').value = '';
+
         if (newTitle && newText) {
             let postReq = {
                 method: 'POST',
@@ -545,13 +559,9 @@ class Tasks {
                 }
             };
             let postRes = await Object(__WEBPACK_IMPORTED_MODULE_0__request__["a" /* default */])(postReq);
-            location.reload();
+            let tasks = await Object(__WEBPACK_IMPORTED_MODULE_0__request__["a" /* default */])(this.data.getReq);
+            this.render(tasks);
         }
-    }
-    render(tasks = []) {
-        document.getElementById('content').innerHTML = '';
-        const content = document.getElementById('content');
-        content.innerHTML = __WEBPACK_IMPORTED_MODULE_1__templates_toDo_hbs___default()({tasks});
     }
     async delTask(e) {
         e.preventDefault();
@@ -567,7 +577,8 @@ class Tasks {
                 let postRes = await Object(__WEBPACK_IMPORTED_MODULE_0__request__["a" /* default */])(delReq);
 
                 if (!Object.is(postRes, undefined)) {
-                    location.reload();
+                    let tasks = await Object(__WEBPACK_IMPORTED_MODULE_0__request__["a" /* default */])(this.data.getReq);
+                    this.render(tasks);
                 }
             }
         }
