@@ -2,17 +2,19 @@
     <div class="row justify-content-center">
         <section class="todo col-sm-10 col-md-7 mt-5">
             <div class="newTask">
-                <form action="" name="newTaskForm" class="newTaskForm">
+                <form id="newTaskForm" action="" name="newTaskForm" class="newTaskForm">
                     <div class="form-group">
-                        <input type="text" class="form-control taskTitle" placeholder="Task Title{{name}}">
-                        <textarea class="form-control taskText" placeholder="Task Text"></textarea>
-                        <button class="btn btn-primary mt-2">Add</button>
+                        <input id="newTitle" type="text" class="form-control taskTitle" placeholder="Task Title">
+                        <textarea id="newText" class="form-control taskText" placeholder="Task Text"></textarea>
+                        <input type="submit" id="addTask" class="btn btn-primary mt-2" value="Add">
                     </div>
                 </form>
             </div>
             <div class="tasks">
                 <ul class="tasksList">
-                    
+                    {{#each tasks}}
+                        {{> partials/task}}
+                    {{/each}}
                 </ul>
             </div>
         </section>

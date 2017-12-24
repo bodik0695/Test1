@@ -56,6 +56,10 @@ body {
   .task_titleTxt, .task_textTxt {
     line-height: normal;
     margin-bottom: 0; }
+  .task_textTxt {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .task_editBtn {
     margin-left: 20px; }
   .task_editBtnIcon {

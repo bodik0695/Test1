@@ -18,5 +18,5 @@ export default function sendRequest({ method = 'GET', url = '/', type = 'applica
         xhr.open(method, url, true);
         xhr.setRequestHeader('Content-Type', type);
         xhr.send(json);
-    }).then(res => console.log(res)).catch(err => console.log(err));
+    }).then(res => res).catch(err => console.log(err));
 }

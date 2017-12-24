@@ -84,6 +84,11 @@ body {
         line-height: normal;
         margin-bottom: 0;
     }
+    &_textTxt{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     &_editBtn{
         @extend %formBtn;
         margin-left: 20px;

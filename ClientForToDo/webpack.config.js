@@ -22,6 +22,11 @@ module.exports = {
             {
                 test: /\.hbs$/,
                 loader: 'handlebars-loader',
+                query: {
+                    partialDirs: [
+                        path.join(__dirname, 'partials')
+                    ]
+                },
             },
         ],
     },
@@ -36,8 +41,6 @@ module.exports = {
         },
     },
     plugins: [
-        new ExtractTextPlugin('style.css'),
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin('style.css')
     ],
 };

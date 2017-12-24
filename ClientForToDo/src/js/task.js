@@ -12,7 +12,7 @@ export default class Task {
     update(title, text, status) {
         this._title = title;
         this._text = text;
-        if (Object.is(typeof status, 'number') && status === 0 || status === 1) {
+        if (status ==='number' && status === 0 || status === 1) {
             this._status = status;
         }
     }
