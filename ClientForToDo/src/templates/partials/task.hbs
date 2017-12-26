@@ -2,12 +2,12 @@
     <form action="" name="taskForm" class="taskForm">
         <div class="task_baseElements">
             <div class="col-md-1 checkbox task_checkbox">
-                    <input type="checkbox">
+                    <input type="checkbox" class="taskCheckbox" {{status}}>
             </div>
             <div class="col-md-8 task_title">
                 <p class="task_titleTxt">{{title}}</p>
             </div>
-            <button id="task_editBtn" class="btn btn-success col-md-1 task_editBtn"  title="Edit Task">
+            <button id="task_editBtn" class="btn btn-success col-md-1 task_editBtn"  title="Edit Task" data-toggle="modal" data-target="#myModalBox">
                 <img src="src/images/editWhite.svg" alt="" class="task_editBtnIcon">
             </button>
             <button id="task_delBtn" class="btn btn-danger col-md-1 task_delBtn" title="Delete Task"><div class="task_delBtnIcon">&times;</div></button>

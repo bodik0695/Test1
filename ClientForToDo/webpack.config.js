@@ -31,6 +31,7 @@ module.exports = {
         ],
     },
     devServer: {
+        hot: true,
         inline: true,
         port: 4000,
         proxy: {
@@ -41,6 +42,8 @@ module.exports = {
         },
     },
     plugins: [
-        new ExtractTextPlugin('style.css')
+        new ExtractTextPlugin('style.css'),
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ],
 };

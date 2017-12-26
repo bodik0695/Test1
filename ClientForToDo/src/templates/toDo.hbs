@@ -11,12 +11,31 @@
                 </form>
             </div>
             <div class="tasks">
-                <ul class="tasksList">
+                <ul id="tasksList" class="tasksList">
                     {{#each tasks}}
                         {{> partials/task}}
                     {{/each}}
                 </ul>
             </div>
+            <button id="clearAll" class="btn btn-success" title="Clear all">Clear all</button>
+            <button class="btn btn-success" title="Edit Task" data-toggle="modal" data-target="#myModalBox">Modal</button>
+            <div id="myModalBox" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Заголовок модального окна</h4>
+                </div>
+                <div class="modal-body">
+                    Содержимое модального окна...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary">Сохранить изменения</button>
+                </div>
+                </div>
+            </div>
+        </div>
         </section>
     </div>     
 </div>
