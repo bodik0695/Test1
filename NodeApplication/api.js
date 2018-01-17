@@ -23,7 +23,7 @@ app.use(bodyParser.json(), (req, res, next) => {
 
 app.use(methodOverride());
 
-MongoClient.connect(testDb.url, (error, database) => {
+MongoClient.connect(toDoDb.url, (error, database) => {
     if (error) return console.log(error);
     routes(app, database);
 

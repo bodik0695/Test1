@@ -113,7 +113,12 @@ module.exports = function f(app, db) {
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200
    *    {
-   *      "message": "todo created!"
+   *        "_id": "5a3167cf2241b12938dff4c6",
+   *        "title": "go to the shop",
+   *        "text": "sugar, potato",
+   *        "status": 0,
+   *        "createAt": "Wed Dec 13 2017 19:47:59 GMT+0200 (Восточная Европа (зима))",
+   *        "changeAt": "Wed Dec 13 2017 19:47:59 GMT+0200 (Восточная Европа (зима))"
    *    }
    *
    * @apiError Bad request incorrect id
@@ -138,7 +143,14 @@ module.exports = function f(app, db) {
             if (err) {
                 return next(err);
             }
-            res.json({ message: 'todo created!' });
+            // res.json({ message: 'todo created!' });
+            db.collection('toDoList').find().toArray((findErr, todos) => {
+                if (findErr) {
+                    return next(findErr);
+                }
+                const newTask = todos.splice(todos.length - 1, 1);
+                return res.json(newTask);
+            });
         });
     });
 
@@ -153,7 +165,12 @@ module.exports = function f(app, db) {
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200
    *    {
-   *      "message": "todo updated!"
+   *        "_id": "5a3167cf2241b12938dff4c6",
+   *        "title": "go to the shop",
+   *        "text": "sugar, potato",
+   *        "status": 0,
+   *        "createAt": "Wed Dec 13 2017 19:47:59 GMT+0200 (Восточная Европа (зима))",
+   *        "changeAt": "Wed Dec 13 2017 19:47:59 GMT+0200 (Восточная Европа (зима))"
    *    }
    *
    * @apiError Not Found todo in DB
@@ -166,8 +183,9 @@ module.exports = function f(app, db) {
    * @apiErrorExample Error-Response:
    * HTTP/1.1 400 Bad Request
    */
-    app.put('/todos', (req, res, next) => {
-        const id = req.body._id;
+    app.put('/todos/:id', (req, res, next) => {
+        const id = req.param('id');
+        let item;
         if (!id) {
             return next(new Error('incorrect data'));
         }
@@ -177,15 +195,22 @@ module.exports = function f(app, db) {
         } catch (e) {
             next(new Error('incorrect data'));
         }
-
-        const item = {
-            $set: {
-                title: req.body.title,
-                text: req.body.text,
-                status: req.body.status,
-                changeAt: new Date().toString(),
-            },
-        };
+        if (!req.body.title && !req.body.text) {
+            item = {
+                $set: {
+                    status: req.body.status,
+                    changeAt: new Date().toString(),
+                },
+            };
+        } else {
+            item = {
+                $set: {
+                    title: req.body.title,
+                    text: req.body.text,
+                    changeAt: new Date().toString(),
+                },
+            };
+        }
         db.collection('toDoList').updateOne(details, item, (err) => {
             if (err) {
                 return next(err);
@@ -193,12 +218,14 @@ module.exports = function f(app, db) {
             if (Object.is(item, null)) {
                 return next(new Error('not found'));
             }
-            res.json({ message: 'todo updated!' });
+            // res.json({ message: 'todo updated!' });
+            db.collection('toDoList')
+                .findOne(details, (findOneErr, changedItem) => res.json(changedItem));
         });
     });
 
     /**
-   * @api {delee} /todos/:id Delete todo from DB
+   * @api {delete} /todos/:id Delete todo from DB
    *
    * @apiParam {Number} _id todo unique ID.
    *
